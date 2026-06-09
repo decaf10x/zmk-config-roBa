@@ -43,6 +43,16 @@
             bindings = <&mkp MCLK>;
             key-positions = <18 20>;
         };
+
+        prevclick {
+            bindings = <&mkp MB4>;
+            key-positions = <30 31>;
+        };
+
+        nextclick {
+            bindings = <&mkp MB5>;
+            key-positions = <31 32>;
+        };
     };
 
     macros {
