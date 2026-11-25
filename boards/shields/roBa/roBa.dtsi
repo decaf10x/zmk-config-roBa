@@ -60,13 +60,10 @@
             , <&key_physical_attrs 100 100  437  350    1000   437   350>
             , <&key_physical_attrs 100 100  550  387    2000   550   387>
 
-
-
             , <&key_physical_attrs 100 100  650  387 (-2000)   650   387>
             , <&key_physical_attrs 100 100  763  350 (-1000)     0   350>
 
             , <&key_physical_attrs 100 100 1200  337       0     0     0>
-
             ;
     };
 
@@ -86,12 +83,12 @@
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
-            row-gpios
-                = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-                , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-                , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-                , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-                ;
+        row-gpios
+            = <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
     };
 
     left_encoder: encoder_left {
@@ -116,6 +113,16 @@
         compatible = "zmk,input-listener";
         status = "disabled";
     };
+
+    nemu_link_split {
+        compatible = "sekigon,nemu-link-radio";
+    };
+
+    nemu_link {
+        compatible = "sekigon,nemu-link";
+        source-0-switch-positions = <0 1>; /* 左手(ID=0): Q + W 長押し */
+        source-1-switch-positions = <8 9>; /* 右手(ID=1): O + P 長押し */
+    };
 };
 
 &spi0 {
@@ -124,5 +131,18 @@
     trackball: trackball@0 {
         status = "disabled";
         reg = <0>;
+    };
+};
+
+&code_partition {
+    reg = <0x00027000 0x000c4000>;
+};
+
+&flash0 {
+    partitions {
+        nemu_link_key_partition: partition@eb000 {
+            label = "nemu_link_key";
+            reg = <0x000eb000 0x00001000>;
+        };
     };
 };
