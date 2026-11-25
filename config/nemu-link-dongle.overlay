@@ -86,22 +86,6 @@
         events = <0>;
     };
 
-    left_encoder: encoder_left {
-        compatible = "zmk,mock-sensor";
-        status = "disabled";
-    };
-
-    right_encoder: encoder_right {
-        compatible = "zmk,mock-sensor";
-        status = "disabled";
-    };
-
-    sensors: sensors {
-        compatible = "zmk,keymap-sensors";
-        sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <10>;
-    };
-
     nemu_link_split {
         compatible = "sekigon,nemu-link-radio";
     };
