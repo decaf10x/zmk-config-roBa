@@ -32,7 +32,7 @@ jobs:
         run: |
           REPO_DIR="$(pwd)"
           mkdir -p /tmp/zmk-ws
-          ln -s "$REPO_DIR/config" /tmp/zmk-ws/config
+          cp -r "$REPO_DIR/config" /tmp/zmk-ws/config
           cd /tmp/zmk-ws
           west init -l config
           west update
