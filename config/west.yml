@@ -1,9 +1,5 @@
 manifest:
   remotes:
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
-    - name: kumamuk-git
-      url-base: https://github.com/kumamuk-git
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
   projects:
@@ -15,8 +11,5 @@ manifest:
       remote: sekigon-gonnoc
       revision: zmk-v0.4
       import: config/west.yml
-    - name: zmk-pmw3610-driver
-      remote: kumamuk-git
-      revision: main
   self:
     path: config
