@@ -11,11 +11,6 @@
     tapping-term-ms = <300>;
 };
 
-&trackball {
-    automouse-layer = <4>;
-    scroll-layers = <5>;
-};
-
 / {
     combos {
         compatible = "zmk,combos";
