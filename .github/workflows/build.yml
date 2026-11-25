@@ -46,7 +46,7 @@ jobs:
           if [ -n "${{ matrix.snippet }}" ]; then
             SNIPPET_ARG="-S ${{ matrix.snippet }}"
           fi
-          west build -s zmk/app -b "${{ matrix.board }}" $SNIPPET_ARG -- -DZMK_CONFIG="${{ github.workspace }}/config" $SHIELD_ARG -DZMK_EXTRA_MODULES="${{ github.workspace }}" ${{ matrix.cmake-args }}
+          west build -s zmk/app -b "${{ matrix.board }}" $SNIPPET_ARG -- -DZMK_CONFIG="$(pwd)/config" $SHIELD_ARG -DZMK_EXTRA_MODULES="$(pwd)" ${{ matrix.cmake-args }}
 
       - name: Rename Artifact
         run: |
