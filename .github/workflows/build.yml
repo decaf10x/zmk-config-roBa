@@ -30,14 +30,22 @@ jobs:
 
       - name: West Init & Update
         run: |
+          REPO_DIR="$(pwd)"
+          mkdir -p /tmp/zmk-ws
+          ln -s "$REPO_DIR/config" /tmp/zmk-ws/config
+          cd /tmp/zmk-ws
           west init -l config
           west update
 
       - name: West Zephyr Export
-        run: west zephyr-export
+        run: |
+          cd /tmp/zmk-ws
+          west zephyr-export
 
       - name: West Build
         run: |
+          REPO_DIR="$(pwd)"
+          cd /tmp/zmk-ws
           SHIELD_ARG=""
           if [ -n "${{ matrix.shield }}" ]; then
             SHIELD_ARG="-DSHIELD=${{ matrix.shield }}"
@@ -46,12 +54,12 @@ jobs:
           if [ -n "${{ matrix.snippet }}" ]; then
             SNIPPET_ARG="-S ${{ matrix.snippet }}"
           fi
-          west build -s zmk/app -b "${{ matrix.board }}" $SNIPPET_ARG -- -DZMK_CONFIG="$(pwd)/config" $SHIELD_ARG -DZMK_EXTRA_MODULES="$(pwd)" ${{ matrix.cmake-args }}
+          west build -s zmk/app -b "${{ matrix.board }}" $SNIPPET_ARG -- -DZMK_CONFIG="$REPO_DIR/config" $SHIELD_ARG -DZMK_EXTRA_MODULES="$REPO_DIR" ${{ matrix.cmake-args }}
 
       - name: Rename Artifact
         run: |
           mkdir -p artifacts
-          cp build/zephyr/zmk.uf2 "artifacts/${{ matrix.artifact-name }}.uf2"
+          cp /tmp/zmk-ws/build/zephyr/zmk.uf2 "artifacts/${{ matrix.artifact-name }}.uf2"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
